@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
@@ -40,10 +40,15 @@ export default function Home() {
     const renderHeader = () => {
         return (
             <div className="flex justify-content-end">
+                <Link className='newBtn' to={'/new'}> 
+                    New Client
+                </Link>
+                
                 <span className="p-input-icon-left">
                     <i className="pi pi-search" />
                     <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Search by DNI or Name" />
                 </span>
+                
             </div>
         );
     };
