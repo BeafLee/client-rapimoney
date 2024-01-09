@@ -6,6 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import { FilterMatchMode } from 'primereact/api';
 import 'primereact/resources/themes/lara-dark-blue/theme.css';
 import 'primereact/resources/primereact.min.css';   
+import axios from 'axios';
 
 export default function Home() {
     const [customers, setCustomers] = useState([]);
@@ -25,6 +26,11 @@ export default function Home() {
             {dni: '87654321', name: 'Lee', lastname: 'Chung'},
             {dni: '87654321', name: 'Carlos', lastname: 'Chung'},
         ])
+
+        const res = axios.get("http://localhost:3010/client");
+
+        console.log(res);
+
     }, []);
 
     const onGlobalFilterChange = (e) => {
