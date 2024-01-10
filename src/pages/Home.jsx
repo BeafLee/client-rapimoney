@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 import { FilterMatchMode } from 'primereact/api';
 import 'primereact/resources/themes/lara-dark-blue/theme.css';
-import 'primereact/resources/primereact.min.css';   
+import 'primereact/resources/primereact.min.css';
 import axios from 'axios';
+
+import Header from '../components/Header';
 
 export default function Home() {
     const [customers, setCustomers] = useState([]);
@@ -18,19 +19,17 @@ export default function Home() {
 
 
     useEffect(() => {
-        setCustomers([
-            {dni: '87654321', name: 'Carlos', lastname: 'Chung'},
-            {dni: '99999999', name: 'Carlos', lastname: 'Chung'},
-            {dni: '88888888', name: 'Carlos', lastname: 'Chung'},
-            {dni: '12121212', name: 'Carlos', lastname: 'Chung'},
-            {dni: '87654321', name: 'Lee', lastname: 'Chung'},
-            {dni: '87654321', name: 'Carlos', lastname: 'Chung'},
-        ])
+        async function fetchClients() {
+            const res = await axios.get("http://localhost:3010/client");
 
-        const res = axios.get("http://localhost:3010/client");
+            console.log(res.data);
 
-        console.log(res);
+            if (res.data.status) {
+                setCustomers(res.data.data);
+            }
+        }
 
+        fetchClients();
     }, []);
 
     const onGlobalFilterChange = (e) => {
@@ -45,33 +44,31 @@ export default function Home() {
 
     const renderHeader = () => {
         return (
-            <div className="flex justify-content-end">
-                <Link className='newBtn' to={'/new'}> 
-                    New Client
-                </Link>
-                
-                <span className="p-input-icon-left">
-                    <i className="pi pi-search" />
-                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Search by DNI or Name" />
-                </span>
-                
+            <div>
+                <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Search by DNI or Name" />
             </div>
         );
     };
 
 
     const header = renderHeader();
-    
+
 
     return (
-        <div className="cards">
-            <h1>Home</h1>
-            <DataTable value={customers} paginator showGridlines rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} filters={filters} globalFilterFields={['dni', 'name']} header={header}> 
-                <Column field="dni" header="DNI" sortable style={{  }}></Column>
-                <Column field="name" header="Name" style={{ }}></Column>
-                <Column field="lastname" header="Lastname" style={{}}></Column>
+        <div>
+            <Header />
+
+            <DataTable value={customers} paginator showGridlines rows={5} rowsPerPageOptions={[5, 10, 25, 50]} filters={filters} globalFilterFields={['dni', 'nombres']} header={header}>
+                <Column field="dni" header="DNI" sortable></Column>
+                <Column field="nombres" header="Name" ></Column>
+                <Column field="apellidos" header="Lastname"></Column>
+                <Column field="fecha_nacimiento" header="Birthdate" sortable></Column>
+                <Column field="celular" header="Phone"></Column>
+                <Column field="correo" header="Email"></Column>
+                <Column field="banco" header="Bank" sortable></Column>
+                <Column field="numero_cci" header="CCI number"></Column>
             </DataTable>
         </div>
     );
 }
-        
+

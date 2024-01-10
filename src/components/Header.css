@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .login-btn,
+  .new-btn {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
