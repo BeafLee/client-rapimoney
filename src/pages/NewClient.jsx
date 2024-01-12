@@ -18,11 +18,9 @@ function NewClient() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:3010/client", {
+            const res = await axios.post(import.meta.env.VITE_SOME_KEY + "/client", {
                 dni, name, lastname, birthdate, phone, email, bank, cci_num: cci
             });
-
-            console.log(res);
 
             navigate("/");
         } catch (error) {

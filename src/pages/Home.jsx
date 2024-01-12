@@ -10,6 +10,7 @@ import axios from 'axios';
 import Header from '../components/Header';
 
 export default function Home() {
+    
     const [customers, setCustomers] = useState([]);
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS }
@@ -17,12 +18,9 @@ export default function Home() {
 
     const [globalFilterValue, setGlobalFilterValue] = useState('');
 
-
     useEffect(() => {
         async function fetchClients() {
-            const res = await axios.get("http://localhost:3010/client");
-
-            console.log(res.data);
+            const res = await axios.get(import.meta.env.VITE_SOME_KEY + "/client");
 
             if (res.data.status) {
                 setCustomers(res.data.data);

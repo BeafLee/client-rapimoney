@@ -11,12 +11,10 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:3010/login", {
+            const res = await axios.post(import.meta.env.VITE_SOME_KEY + "/login", {
                 dni, email
             });
-
-            console.log(res);
-            
+    
             alert(res.data.message);
 
             if (res.data.status) {
